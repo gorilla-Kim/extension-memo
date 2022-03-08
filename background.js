@@ -1,9 +1,13 @@
 let windowId = 0
+const storageKeys = {
+    isOpen: 'isOpen',
+    todos: 'todos'
+}
 
 function openNewWindow(windowId) {
-    chrome.storage.sync.get('isOpen', async function(result) {
+    chrome.storage.sync.get(storageKeys.isOpen, async function(result) {
         if(result.isOpen) {
-            chrome.storage.sync.remove('isOpen');
+            chrome.storage.sync.remove(storageKeys.isOpen);
             chrome.windows.remove(windowId)
         } else {
             chrome.storage.sync.set({isOpen: true});
