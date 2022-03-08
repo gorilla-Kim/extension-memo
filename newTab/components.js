@@ -44,7 +44,7 @@ function Todo({id, status, content, created_at, updated_at}, index) {
 
 function Todos(target, todos){
     target.innerHTML = ''
-    todos.forEach((todo, index) => {
+    todos?.forEach((todo, index) => {
         target.appendChild(Todo(todo, index))
     })
 }
