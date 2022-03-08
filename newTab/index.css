@@ -32,6 +32,10 @@ header {
     margin: 5px 0 0 5px;
     box-shadow: none;
 }
+.header-btn.active {
+    margin: 5px 0 0 5px;
+    box-shadow: none;
+}
 
 #todo-wrapper {
     display: flex;

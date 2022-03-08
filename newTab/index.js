@@ -16,7 +16,9 @@ chrome.storage.sync.get(storageKeys.todos,  function(result) {
 $btns.forEach($btn => {
     $btn.addEventListener('click',function(event){
         const {target} = event
+        $btns.forEach(item => item.classList.remove('active'))
         const btnName = target.classList[1]
+        target.classList.add('active')
         chrome.storage.sync.get(storageKeys.todos,  function(result) {
             const { todos } = result
             let filteredTodos = []
