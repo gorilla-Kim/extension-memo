@@ -27,10 +27,10 @@ $btns.forEach($btn => {
                     filteredTodos = todos
                     break;
                 case 'completed':
-                    filteredTodos = todos.filter(todo=>todo.status === "completed")
+                    filteredTodos = todos?.filter(todo=>todo.status === "completed") || []
                     break;
                 case 'working':
-                    filteredTodos = todos.filter(todo=>todo.status === "working")
+                    filteredTodos = todos?.filter(todo=>todo.status === "working") || []
                     break
                 case 'deleteAll':
                     chrome.storage.sync.remove(storageKeys.todos);
