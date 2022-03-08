@@ -3,9 +3,6 @@
   "description": "Memo App",
   "version": "1.0",
   "manifest_version": 3,
-  "chrome_url_overrides": {
-    "newtab": "newTab.html"
-  },
   "action": {
     "default_icon": {
       "16": "/images/icon.png"
