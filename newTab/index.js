@@ -7,7 +7,6 @@ const $btns = document.querySelectorAll('header > div.header-btn')
 const $newTodoBtn = document.querySelector('#form-wrapper .new-todo-btn')
 const $newTodoText = document.querySelector('#form-wrapper input')
 const $todoWrapper = document.querySelector('#todo-wrapper')
-const $todosCheckbox = document.querySelectorAll('.todo input')
 
 chrome.storage.sync.get(storageKeys.todos,  function(result) {
     const { todos } = result
@@ -35,6 +34,7 @@ $btns.forEach($btn => {
                     chrome.storage.sync.remove(storageKeys.todos);
                     break;
             }
+            localStorage.setItem('active-btn', btnName)
             Todos($todoWrapper, filteredTodos)
         })
     })
@@ -54,8 +54,17 @@ $newTodoBtn.addEventListener('click', function(event){
         const isValid = result.todos && typeof result.todos === 'object'
         const todos  = isValid ? [...result.todos, todo] : [todo]
         chrome.storage.sync.set({[storageKeys.todos]: todos});
-
-        Todos($todoWrapper, todos.filter(todo=>todo.status==="working"))
+        setTodoElements(todos)
     })
     $newTodoText.value = ""
 })
+
+
+function setTodoElements(todos) {
+    const activeBtn = localStorage.getItem('active-btn')
+    if(activeBtn === "working" || activeBtn === "completed") {
+        Todos($todoWrapper, todos.filter(todo=>todo.status===activeBtn))
+    } else {
+        Todos($todoWrapper, todos)
+    }
+}

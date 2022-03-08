@@ -20,7 +20,7 @@ function checkboxHandler(event){
             return todo
         })]
         chrome.storage.sync.set({[storageKeys.todos]: newTodos});
-        Todos($todoWrapper, newTodos.filter(todo=>todo.status==="working"))
+        setTodoElements(newTodos)
     })
 }
 
