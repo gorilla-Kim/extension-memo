@@ -14,7 +14,8 @@ function checkboxHandler(event){
             if(todo.id === id) {
                 return {
                     ...todo,
-                    status: newStatus
+                    status: newStatus,
+                    updated_at: new Date().toLocaleString()
                 }
             }
             return todo
@@ -23,23 +24,42 @@ function checkboxHandler(event){
         setTodoElements(newTodos)
     })
 }
+function deleteBtnHandler(event){
+    const $parent = event.target.parentElement
+    const $checkbox = $parent.querySelector('input')
+    const id = $checkbox.dataset.id
+    chrome.storage.sync.get(storageKeys.todos,  function(result) {
+      const filteredTodos = result.todos.filter(todo => todo.id !== id)
+        chrome.storage.sync.set({[storageKeys.todos]: filteredTodos});
+        setTodoElements(filteredTodos)
+    })
+}
 
 function Todo({id, status, content, created_at, updated_at}, index) {
-    const dates = created_at.split(' ')
-    const $el = document.createElement('div');
-    $el.className="todo"
+    const dates = updated_at ? updated_at.split(' ') : created_at.split(' ')
+
+    const $todoWrapper = document.createElement('div');
+    const $delete = document.createElement('div');
+    const $contentWrapper = document.createElement('div');
     const $checkbox = document.createElement('input')
+    $todoWrapper.className="todo-wrapper"
+    $contentWrapper.className="todo-contents"
+    $delete.className="todo-delete"
+
     $checkbox.type="checkbox"
     $checkbox.checked = status === "completed"
     $checkbox.dataset.id=id
     $checkbox.addEventListener('change',checkboxHandler)
-    $el.innerHTML = `
+    $delete.addEventListener('click', deleteBtnHandler)
+    $contentWrapper.innerHTML = `
         <div>${index+1}.</div>
-        <div class="content">${content}</div>
-        <div>${dates[0]}${dates[1]}${dates[2]}</div> 
+        <div class="todo">${content}</div>
+        <div>${dates[1]}${dates[2]}${dates[3]}${dates[4]}</div> 
     `;
-    $el.appendChild($checkbox)
-    return $el
+    $todoWrapper.appendChild($checkbox)
+    $todoWrapper.appendChild($contentWrapper)
+    $todoWrapper.appendChild($delete)
+    return $todoWrapper
 }
 
 function Todos(target, todos){

@@ -11,5 +11,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "commands": {
+    "open:window": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "open memo"
+    }
+  },
   "permissions": ["storage", "activeTab", "scripting"]
 }

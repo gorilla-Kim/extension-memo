@@ -6,31 +6,38 @@ const storageKeys = {
 const $btns = document.querySelectorAll('header > div.header-btn')
 const $newTodoBtn = document.querySelector('#form-wrapper .new-todo-btn')
 const $newTodoText = document.querySelector('#form-wrapper input')
-const $todoWrapper = document.querySelector('#todo-wrapper')
+const $todoWrapper = document.querySelector('#todos-wrapper')
 
 chrome.storage.sync.get(storageKeys.todos,  function(result) {
     const { todos } = result
+    localStorage.setItem('active-btn', 'all')
     Todos($todoWrapper, todos)
 })
+
+function activeToggle($target) {
+    $btns.forEach(item => item.classList.remove('active'))
+    $target.classList.add('active')
+}
 
 $btns.forEach($btn => {
     $btn.addEventListener('click',function(event){
         const {target} = event
-        $btns.forEach(item => item.classList.remove('active'))
         const btnName = target.classList[1]
-        target.classList.add('active')
         chrome.storage.sync.get(storageKeys.todos,  function(result) {
             const { todos } = result
             let filteredTodos = []
             switch (btnName) {
                 case 'all':
                     filteredTodos = todos
+                    activeToggle(target)
                     break;
                 case 'completed':
                     filteredTodos = todos?.filter(todo=>todo.status === "completed") || []
+                    activeToggle(target)
                     break;
                 case 'working':
                     filteredTodos = todos?.filter(todo=>todo.status === "working") || []
+                    activeToggle(target)
                     break
                 case 'deleteAll':
                     chrome.storage.sync.remove(storageKeys.todos);
