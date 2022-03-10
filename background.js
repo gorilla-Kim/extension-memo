@@ -15,7 +15,7 @@ function openNewWindow() {
             chrome.windows.create({
                 url: chrome.runtime.getURL("/newTab/index.html"),
                 type: "popup",
-                height: 800,
+                height: 850,
                 width: 500
             }, function(window){
                 chrome.storage.sync.set({windowId: window.id});

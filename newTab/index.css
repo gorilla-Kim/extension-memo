@@ -1,3 +1,14 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+#app-warpper {
+    width: 480px;
+    overflow-x: hidden;
+    position: relative;
+}
 #banner {
     width: 100%;
     display: flex;
@@ -88,10 +99,7 @@ header {
     justify-content: center;
     align-items: center;
     gap: 30px;
-    width: 100%;
     padding: 10px 0;
-    position: fixed;
-    bottom: 0;
 }
 
 #form-wrapper input {
